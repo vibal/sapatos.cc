@@ -1,47 +1,124 @@
-<!DOCTYPE html>
-    <html>
-      <head>
-        <title>Basic</title>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/page.js/1.11.5/page.min.js"></script>
-        <base href="//www.sapatos.cc" >
-      </head>
-      <body>
-        <h1>Basic</h1>
-        <p></p>
-        <ul>
-          <li><a href="./">/</a></li>
-          <li><a href="#whoop">#whoop</a></li>
-          <li><a href="./about">/about</a></li>
-          <li><a href="./contact">/contact</a></li>
-          <li><a href="./contact/me">/contact/me</a></li>
-          <li><a href="./not-found?foo=bar">/not-found</a></li>
-        </ul>
+<html ng-app='le-test-app'>
+<head>
+<base href='//www.sapatos.cc'/>
+<!-- Bootstrap core CSS -->
+<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet'/>
+<meta content='IE=EmulateIE7' http-equiv='X-UA-Compatible'/>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'/>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<meta content='blogger' name='generator'/>
+<link href='https://dr0idx.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='//www.sapatos.cc/' rel='canonical'/>
+
+<meta content='http://www.sapatos.cc/' property='og:url'/>
+<meta content='dr0id' property='og:title'/>
+<meta content='' property='og:description'/>
+<title>dr0id</title>
+<style type='text/css'>
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+</style>
+
+</head>
+<body ng-controller='myController'>
+<div class='main section' id='main'><div class='widget HTML' data-version='1' id='HTML1'>
+<div class='widget-content'>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">dr0id</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="./about">About</a></li>
+            <li><a href="./contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template" ng-view>
+        
+      </div>
+
+    </div><!-- /.container -->
+
+    <script type="text/ng-template" id="/home.html">
+      <div id="home" ng-bind-html="htmlSafe(home)"></div>
+    </script>
+    <script type="text/ng-template" id="/about.html">
+      <div id="about" ng-bind-html="htmlSafe(home1)"></div>
+    </script>
+    <script type="text/ng-template" id="/contact.html">
+      <div id="contact" ng-bind-html="htmlSafe(home2)"></div>
+    </script>   
     
-        <script>
-          // the "notfound" implements a catch-all
-          // with page('*', notfound). Here we have
-          // no catch-all, so page.js will redirect
-          // to the location of paths which do not
-          // match any of the following routes
-          //
-          page.base('/');
-          page('/', index);
-          page('/about', about);
-          page('/contact', contact);
-          page('/contact/:contactName', contact);
-          page();
-          function index() {
-            document.querySelector('p')
-              .textContent = 'viewing index';
-          }
-          function about() {
-            document.querySelector('p')
-              .textContent = 'viewing about';
-          }
-          function contact(ctx) {
-            document.querySelector('p')
-              .textContent = 'viewing contact ' + (ctx.params.contactName || '');
-          }
-        </script>
-      </body>
-    </html>
+</div>
+<!-- JS -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-route.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-sanitize.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.5/modules/datepicker.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js'></script>
+<script type='text/javascript'>
+		var home,home1,home2,dumanka;
+		var app=angular.module('le-test-app',['ngRoute','ngSanitize']);
+		app.controller('myController', function($scope, $http, $sce){
+		    $http.get('https://spreadsheets.google.com/feeds/list/1_9uJEQW-H2-r3rIN16VOpzbskfmkCJFQw1KHCTm5wCk/1/public/basic?alt=json').success(function(response) {
+	          	if (response) {
+		            $scope.home = response.feed.entry[0]['content']['$t'];
+		            $scope.home = $scope.home.replace(/_cokwr: /,'');
+		            $scope.home1 = response.feed.entry[1]['content']['$t'];
+		            $scope.home1 = $scope.home1.replace(/_cokwr: /,'');
+		            $scope.home2 = response.feed.entry[2]['content']['$t'];
+		            $scope.home2 = $scope.home2.replace(/_cokwr: /,'');
+			    	//console.log($scope.home2);
+
+	          }
+	          $scope.htmlSafe = function (data) {
+			        return $sce.trustAsHtml(data);
+			  }
+	      	});
+
+	    });
+
+	    app.config(function($routeProvider, $locationProvider){
+
+		      $routeProvider
+		          .when('/',{
+			          	templateUrl: '/home.html',
+		          })
+		          .when('/contact',{
+			          	templateUrl: '/contact.html',
+		          })
+		          .when('/about',{
+			          	templateUrl: '/about.html',
+		          })
+		          .otherwise({
+		          		templateUrl: '/home.html',
+                		controller : 'myController'
+		          });
+
+		           $locationProvider.html5Mode(true);
+		});
+	    
+		</script>
+
+</body>
+</html>
